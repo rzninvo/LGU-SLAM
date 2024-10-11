@@ -19,7 +19,6 @@ class PoseTrajectoryFiller:
         self.fnet = net.fnet
         self.update = net.update
         self.GA = net.GA
-        self.beta = net.beta
         self.ofs_residual = net.ofs_residual
         self.ofsMap = net.ofsMap
         self.count = 0
@@ -67,7 +66,7 @@ class PoseTrajectoryFiller:
         self.video.counter.value += M
         self.video[N:N+M] = (tt, images[:,0], Gs.data, 1, None, intrinsics / 8.0, fmap)
 
-        graph = FactorGraph(self.video, self.update, self.GA, self.beta, self.ofsMap, self.ofs_residual)
+        graph = FactorGraph(self.video, self.update, self.GA, self.ofsMap, self.ofs_residual)
         graph.add_factors(t0.cuda(), torch.arange(N, N+M).cuda())
         graph.add_factors(t1.cuda(), torch.arange(N, N+M).cuda())
 

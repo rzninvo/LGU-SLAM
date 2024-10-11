@@ -86,37 +86,3 @@ class GaussianMask(nn.Module):
 
         return corr1,mean,det
 
-def per_Corr_Normalization(x, normalIndex, eps=1e-5):
-    mean = torch.mean(x, dim=normalIndex)
-    mean = mean.unsqueeze(dim=1).unsqueeze(dim=2)
-    var = torch.var(x, dim=normalIndex, unbiased=False)+eps
-    var = torch.sqrt(var).unsqueeze(dim=1).unsqueeze(dim=2)
-    t = x - mean
-    t = t / var
-    return t
-# GA = GaussianAttention(dim=1).cuda()
-# total_params = sum(p.numel() for p in GA.parameters() if p.requires_grad)
-#
-if __name__ =="__main__":
-
-    # covFilter = nn.Sequential(torch.nn.Conv2d(1, 1, 24, dilation=2),
-    #                                nn.ReLU(),
-    #                            nn.Linear(18, 1)).cuda()
-
-    GA = GaussianMask(6,8).cuda()
-    # total_params = sum(p.numel() for p in GA.parameters() if p.requires_grad)
-    # print(total_params)
-    x1 = torch.randn((1,6,8,256)).cuda()
-    corr = torch.randn((1,6,8,6,8)).cuda()
-    ba = []
-    for i in range(12):
-        start = time.time()
-        ba.append(GA(x1,corr))
-        end = time.time()
-        print(end-start)
-
-print()
-
-
-
-# y = GA(x,48,64).view(1,5,1,3072,48,64)*x+x

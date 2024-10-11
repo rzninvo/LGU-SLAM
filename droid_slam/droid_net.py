@@ -5,17 +5,13 @@ import torch.nn as nn
 import torch.nn.functional as F
 from droid_slam.modules.extractor import BasicEncoder
 from droid_slam.modules.corr import CorrBlock
-from droid_slam.modules.gru import ConvGRU
-from droid_slam.modules.gru_kanBias import Kanbias_GRU
+from droid_slam.modules.gru_kanBias import KAN_bias_GRU
 from droid_slam.modules.clipping import GradientClip
 from droid_slam.geom.ba import BA
-from scipy.stats import truncnorm
 import droid_slam.geom.projective_ops as pops
 from droid_slam.geom.graph_utils import graph_to_edge_list, keyframe_indicies
-from droid_slam.gaussianAttn_ import GaussianAttention
 from droid_slam.gaussianMask_cuda import GaussianMask
 from torch_scatter import scatter_mean
-from droid_slam.modules.kan import KANLinear
 def cvx_upsample(data, mask):
     """ upsample pixel-wise transformation field """
     batch, ht, wd, dim = data.shape
@@ -102,7 +98,7 @@ class UpdateModule(nn.Module):
             nn.Conv2d(128, 2, 3, padding=1),
             GradientClip())
 
-        self.gru = ConvGRU(128, 128+128+64)
+        self.gru = KAN_bias_GRU(128, 128+128+64)
         self.agg = GraphAgg()
 
     def forward(self, net, inp, corr, flow=None, ii=None, jj=None):
@@ -145,13 +141,11 @@ class DroidNet(nn.Module):
         super(DroidNet, self).__init__()
         self.fnet = BasicEncoder(output_dim=128, norm_fn='instance') #feature network
         self.cnet = BasicEncoder(output_dim=256, norm_fn='none')    #context network
-        # self.GA = GaussianMask(48,64)
-        self.ofsMap = nn.Conv2d(256,98,3,padding=1) #nn.Conv2d(256,98,3,padding=1)
-        self.ofs_residual = nn.Conv2d(256,98,3,padding=1)#nn.Conv2d(256,98,3,padding=1)
-        self.beta = None #nn.Parameter(torch.ones((1)))
-        self.GA = None
+        self.GA = GaussianMask(48,64)
+        self.ofsMap = nn.Conv2d(256,98,3,padding=1)
+        self.ofs_residual = nn.Conv2d(256,98,3,padding=1)
         self.update = UpdateModule()
-        self.smoothl1 = torch.nn.SmoothL1Loss(reduction="mean")
+
         for m in self.ofsMap.modules():
             m.weight.data.zero_()
             if m.bias is not None:
@@ -190,7 +184,7 @@ class DroidNet(nn.Module):
         fmaps, net, inp = self.extract_features(images)
         net, inp = net[:,ii], inp[:,ii]
 
-        corr_fn = CorrBlock(self.beta, self.ofsMap, self.ofs_residual, self.GA, fmaps[:,ii], fmaps[:,jj], num_levels=4, radius=3)
+        corr_fn = CorrBlock(self.ofsMap, self.ofs_residual, self.GA, fmaps[:,ii], fmaps[:,jj], num_levels=4, radius=3)
 
         ht, wd = images.shape[-2:]
         coords0 = pops.coords_grid(ht//8, wd//8, device=images.device)
@@ -212,7 +206,7 @@ class DroidNet(nn.Module):
 
             resd = target - coords1
             flow = coords1 - coords0 #coords1 is pij , coords0 is pi
-            corr = corr_fn(coords1) #mean_n,theta
+            corr, mean_n,theta = corr_fn(coords1)
 
             motion = torch.cat([flow, resd], dim=-1)
             motion = motion.permute(0,1,4,2,3).clamp(-64.0, 64.0)
@@ -227,19 +221,19 @@ class DroidNet(nn.Module):
 
             coords1, valid_mask = pops.projective_transform(Gs, disps, intrinsics, ii, jj)
             residual = (target - coords1)
-            #
-            # if step > num_steps-6:
-            #     tloss = torch.mean(torch.abs((coords1 * valid_mask).norm(dim=-1)-(mean_n*valid_mask).norm(dim=-1))/(2*theta)+torch.log(torch.sqrt(theta)))
-            #     sumloss.append(tloss)
+
+            if step > num_steps-6:
+                tloss = torch.mean(torch.abs((coords1 * valid_mask).norm(dim=-1)-(mean_n*valid_mask).norm(dim=-1))/(2*theta)+torch.log(torch.sqrt(theta)))
+                sumloss.append(tloss)
 
             Gs_list.append(Gs)
             disp_list.append(upsample_disp(disps, upmask))
             residual_list.append(valid_mask * residual)
 
-        # loss = 0
-        # for i in range(len(sumloss)):
-        #     loss += sumloss[i]
+        loss = 0
+        for i in range(len(sumloss)):
+            loss += sumloss[i]
 
 
 
-        return Gs_list, disp_list, residual_list
+        return Gs_list, disp_list, residual_list, loss

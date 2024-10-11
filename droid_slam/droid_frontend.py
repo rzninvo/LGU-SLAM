@@ -10,7 +10,7 @@ class DroidFrontend:
     def __init__(self, net, video, args):
         self.video = video
         self.update_op = net.update
-        self.graph = FactorGraph(video, net.update, net.GA, net.beta, net.ofsMap, net.ofs_residual, max_factors=48, upsample=args.upsample)
+        self.graph = FactorGraph(video, net.update, net.GA, net.ofsMap, net.ofs_residual, max_factors=48, upsample=args.upsample)
 
         # local optimization window
         self.t0 = 0

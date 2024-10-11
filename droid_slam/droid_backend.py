@@ -11,7 +11,6 @@ class DroidBackend:
         self.video = video
         self.update_op = net.update
         self.GA = net.GA
-        self.beta1 = net.beta
         self.ofs_residual = net.ofs_residual
         self.ofsMap = net.ofsMap
         # global optimization window
@@ -32,7 +31,7 @@ class DroidBackend:
         if not self.video.stereo and not torch.any(self.video.disps_sens):
              self.video.normalize()
 
-        graph = FactorGraph(self.video, self.update_op, self.GA, self.beta1, self.ofsMap, self.ofs_residual, corr_impl="alt", max_factors=16*t, upsample=self.upsample)#corr_impl="alt"
+        graph = FactorGraph(self.video, self.update_op, self.GA, self.ofsMap, self.ofs_residual, corr_impl="alt", max_factors=16*t, upsample=self.upsample)#corr_impl="alt"
 
         graph.add_proximity_factors(rad=self.backend_radius, 
                                     nms=self.backend_nms, 

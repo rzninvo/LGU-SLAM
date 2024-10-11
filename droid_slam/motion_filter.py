@@ -18,7 +18,6 @@ class MotionFilter:
         self.cnet = net.cnet
         self.fnet = net.fnet
         self.update = net.update
-        self.beta = net.beta
         self.ofs_residual = net.ofs_residual
         self.ofsMap = net.ofsMap
         self.video = video
@@ -73,7 +72,7 @@ class MotionFilter:
             # index correlation volume
             coords0 = pops.coords_grid(ht, wd, device=self.device)[None,None]
 
-            corr = CorrBlock(self.beta, self.ofsMap,self.ofs_residual, self.GA,self.fmap[None,[0]], gmap[None,[0]])(coords0)
+            corr = CorrBlock(self.ofsMap,self.ofs_residual, self.GA,self.fmap[None,[0]], gmap[None,[0]])(coords0)
 
             # approximate flow magnitude using 1 update iteration
             _, delta, weight = self.update(self.net[None], self.inp[None], corr)

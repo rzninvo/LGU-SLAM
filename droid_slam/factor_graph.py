@@ -9,7 +9,7 @@ import droid_slam.geom.projective_ops as pops
 
 
 class FactorGraph:
-    def __init__(self, video, update_op, GA,beta, ofsMap, ofs_residual, device="cuda:0", corr_impl="volume", max_factors=-1, upsample=False):
+    def __init__(self, video, update_op, GA, ofsMap, ofs_residual, device="cuda:0", corr_impl="volume", max_factors=-1, upsample=False):
         self.video = video
         self.update_op = update_op
         self.device = device
@@ -17,7 +17,6 @@ class FactorGraph:
         self.corr_impl = corr_impl
         self.upsample = upsample
         self.GA = GA
-        self.beta = beta
         self.ofsMap = ofsMap
         self.ofs_residual = ofs_residual
         # operator at 1/8 resolution
@@ -119,7 +118,7 @@ class FactorGraph:
             c = (ii == jj).long()
             fmap1 = self.video.fmaps[ii,0].to(self.device).unsqueeze(0)
             fmap2 = self.video.fmaps[jj,c].to(self.device).unsqueeze(0)
-            corr = CorrBlock(self.beta, self.ofsMap, self.ofs_residual, self.GA, fmap1, fmap2)
+            corr = CorrBlock(self.ofsMap, self.ofs_residual, self.GA, fmap1, fmap2)
 
             self.corr = corr if self.corr is None else self.corr.cat(corr)
 
@@ -261,7 +260,7 @@ class FactorGraph:
         t = self.video.counter.value
 
         num, rig, ch, ht, wd = self.video.fmaps.shape
-        corr_op = AltCorrBlock(self.beta,self.ofsMap, self.ofs_residual, self.GA,self.video.fmaps.view(1, num*rig, ch, ht, wd))
+        corr_op = AltCorrBlock(self.ofsMap, self.ofs_residual, self.GA,self.video.fmaps.view(1, num*rig, ch, ht, wd))
 
         for step in range(steps):
             print("Global BA Iteration #{}".format(step+1))

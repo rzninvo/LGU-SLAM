@@ -57,7 +57,6 @@ class Droid:
 
         self.net.load_state_dict(state_dict)
         self.net.to("cuda:0").eval()
-        print()
 
     def track(self, tstamp, image, depth=None, intrinsics=None):
         """ main thread - update map """
