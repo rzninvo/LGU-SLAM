@@ -1,2 +1,2 @@
-# DCGU
+# LGU
 deep visual slam
