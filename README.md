@@ -8,11 +8,11 @@
 Yucheng Huang, Luping Ji, Hudong Liu, Mao Ye
 
 ```
-<!-- @article{teed2021droid,
-  title={{DROID-SLAM: Deep Visual SLAM for Monocular, Stereo, and RGB-D Cameras}},
-  author={Teed, Zachary and Deng, Jia},
-  journal={Advances in neural information processing systems},
-  year={2021}
+<!-- @article{xxxxx,
+  title={{LGU-SLAM: Learnable Gaussian Uncertainty Matching with Deformable Correlation Sampling for Deep Visual SLAM}},
+  author={Yucheng Huang, Luping Ji, Hudong Liu, Mao Ye},
+  journal={xxxxxxxxxxxxx},
+  year={xxxxx}
 } -->
 ```
 
