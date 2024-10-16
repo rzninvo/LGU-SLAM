@@ -1,19 +1,19 @@
 # LGU-SLAM
 
 
-<!-- <center><img src="archi.pdf" width="640" height="320" style="center"></center> -->
+<!-- <center><img src="lgu.png" width="640" height="320" style="center"></center> -->
 
 
 [LGU-SLAM: Learnable Gaussian Uncertainty Matching with Deformable Correlation Sampling for Deep Visual SLAM](xxxxxxxxxxxxxxxxxx)  
 Yucheng Huang, Luping Ji, Hudong Liu, Mao Ye
 
 ```
-<!-- @article{xxxxx,
+@article{xxxxx,
   title={{LGU-SLAM: Learnable Gaussian Uncertainty Matching with Deformable Correlation Sampling for Deep Visual SLAM}},
   author={Yucheng Huang, Luping Ji, Hudong Liu, Mao Ye},
   journal={xxxxxxxxxxxxx},
   year={xxxxx}
-} -->
+}
 ```
 
 **Initial Code Release:** This repo currently provides a single GPU implementation of our monocular, stereo, and RGB-D SLAM systems. It currently contains demos, training, and evaluation scripts. 
