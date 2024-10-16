@@ -125,8 +125,6 @@ First download the TartanAir dataset. The download script can be found in `third
 python download_training.py --rgb --depth
 ```
 
-You can then run the training script. We use 4x3090 RTX GPUs for training which takes approximatly 1 week. If you use a different number of GPUs, adjust the learning rate accordingly.
-
 **Note:** On the first training run, covisibility is computed between all pairs of frames. This can take several hours, but the results are cached so that future training runs will start immediately. 
 
 
