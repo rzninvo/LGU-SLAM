@@ -52,8 +52,6 @@ python offersample_LGS/setup.py install
 
 ## Demos
 
-1. Download the model from baiduyun: [demo.pth](https://xxxxxxxxxxxxxxxxxx)
-
 2. Download some sample videos using the provided script.
 ```Bash
 ./tools/download_sample_data.sh
