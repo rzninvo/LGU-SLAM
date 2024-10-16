@@ -134,5 +134,6 @@ python train.py --datapath=<path to tartanair>
 
 ## Acknowledgements
 Data from [TartanAir](https://theairlab.org/tartanair-dataset/) was used to train our model. We additionally use evaluation tools from [evo](https://github.com/MichaelGrupp/evo) and [tartanair_tools](https://github.com/castacks/tartanair_tools).
-```
+
+
 Thank you [DROID](https://github.com/princeton-vl/DROID-SLAM.git) for inspiring our work.
