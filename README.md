@@ -27,7 +27,7 @@ To run the code you will need ...
 * **Training:** Training requires a GPU with at least 24G of memory. 
 
 ## Getting Started
-1. Clone the repo (you also need to clone[lietorch](https://github.com/princeton-vl/lietorch.git) and [eigen](https://github.com/princeton-vl/DROID-SLAM/blob/main/thirdparty/eigen) in thirdparty)
+1. Clone the repo (you also need to clone [lietorch](https://github.com/princeton-vl/lietorch.git) and [eigen](https://github.com/princeton-vl/DROID-SLAM/blob/main/thirdparty/eigen) in thirdparty)
 ```Bash
 git clone https://github.com/UESTC-nnLab/LGU-SLAM.git
 ```
