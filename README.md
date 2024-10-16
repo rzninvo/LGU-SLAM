@@ -1,7 +1,7 @@
 # LGU-SLAM
 
 
-<!-- <center><img src="misc/LGU.png" width="640" height="320" style="center"></center> -->
+<!-- <center><img src="archi.pdf" width="640" height="320" style="center"></center> -->
 
 
 [LGU-SLAM: Learnable Gaussian Uncertainty Matching with Deformable Correlation Sampling for Deep Visual SLAM](xxxxxxxxxxxxxxxxxx)  
