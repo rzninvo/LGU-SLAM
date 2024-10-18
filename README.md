@@ -39,12 +39,12 @@ pip install evo --upgrade --no-binary evo
 pip install gdown
 ```
 
-3. Compile the droid CUDA extensions (takes about 10 minutes)
+3. Compile the lietorch CUDA extensions (takes about 6 minutes)
 ```Bash
 python setup.py install
 ```
 
-4. Compile the LGU(learnable gaussian uncertainty + deformable sampling) CUDA extensions (takes about 6 minutes)
+4. Compile the LGU(learnable gaussian uncertainty + deformable sampling + low-memory deformable sampling) CUDA extensions (takes about 8 minutes)
 ```Bash
 python offersample_LGS/setup.py install
 ```
