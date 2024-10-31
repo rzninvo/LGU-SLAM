@@ -4,15 +4,18 @@
 <center><img src="lgu.png" width="640" height="320" style="center"></center>
 
 
-[LGU-SLAM: Learnable Gaussian Uncertainty Matching with Deformable Correlation Sampling for Deep Visual SLAM](xxxxxxxxxxxxxxxxxx)  
+[LGU-SLAM: Learnable Gaussian Uncertainty Matching with Deformable Correlation Sampling for Deep Visual SLAM](https://arxiv.org/abs/2410.23231)  
 Yucheng Huang, Luping Ji, Hudong Liu, Mao Ye
 
 ```
-@article{xxxxx,
-  title={{LGU-SLAM: Learnable Gaussian Uncertainty Matching with Deformable Correlation Sampling for Deep Visual SLAM}},
-  author={Yucheng Huang, Luping Ji, Hudong Liu, Mao Ye},
-  journal={xxxxxxxxxxxxx},
-  year={xxxxx}
+@misc{huang2024lguslamlearnablegaussianuncertainty,
+      title={LGU-SLAM: Learnable Gaussian Uncertainty Matching with Deformable Correlation Sampling for Deep Visual SLAM}, 
+      author={Yucheng Huang and Luping Ji and Hudong Liu and Mao Ye},
+      year={2024},
+      eprint={2410.23231},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2410.23231}, 
 }
 ```
 
