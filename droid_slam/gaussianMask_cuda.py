@@ -24,9 +24,9 @@ class GaussianMaskCuda(torch.autograd.Function):
 
 def per_Corr_Normalization(x, normalIndex, eps=1e-5):
     mean = torch.mean(x, dim=normalIndex)
-    mean = mean.unsqueeze(dim=normalIndex[0]).unsqueeze(dim=normalIndex[1]).unsqueeze(dim=normalIndex[2])
+    mean = mean.unsqueeze(dim=1).unsqueeze(dim=2)
     var = torch.var(x, dim=normalIndex, unbiased=False)+eps
-    var = torch.sqrt(var).unsqueeze(dim=normalIndex[0]).unsqueeze(dim=normalIndex[1]).unsqueeze(dim=normalIndex[2])
+    var = torch.sqrt(var).unsqueeze(dim=1).unsqueeze(dim=2)
     t = x - mean
     t = t / var
     return t
