@@ -35,11 +35,3 @@ class KAN_bias_GRU(nn.Module):
 
         net = (1-z) * net + z * q #
         return net
-
-if __name__ =="__main__":
-    gru = ConvGRU(128,310).cuda()
-    total_params = sum(p.numel() for p in gru.parameters() if p.requires_grad)
-    inp = torch.randn((36,310,40,64)).cuda()
-    net = torch.randn((36, 128, 40, 64)).cuda()
-    s = gru(net,inp)
-    print()
