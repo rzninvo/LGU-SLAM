@@ -206,7 +206,7 @@ class DroidNet(nn.Module):
 
             resd = target - coords1
             flow = coords1 - coords0 #coords1 is pij , coords0 is pi
-            corr, mean_n,theta = corr_fn(coords1)
+            corr,mean_n, theta = corr_fn(coords1) #
 
             motion = torch.cat([flow, resd], dim=-1)
             motion = motion.permute(0,1,4,2,3).clamp(-64.0, 64.0)

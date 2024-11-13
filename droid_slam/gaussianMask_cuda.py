@@ -22,6 +22,7 @@ class GaussianMaskCuda(torch.autograd.Function):
         means_grad,covs_grad = defCorrSample.gaussianMask_backward(mean, cov, corr, grad_output, ctx.radius)
         return means_grad, covs_grad, None, None
 
+
 def per_Corr_Normalization(x, normalIndex, eps=1e-5):
     mean = torch.mean(x, dim=normalIndex)
     mean = mean.unsqueeze(dim=1).unsqueeze(dim=2)

@@ -6,7 +6,7 @@ import numpy
 import torch
 import torch.nn.functional as F
 import defCorrSample
-
+import droid_backends
 class CorrSampler(torch.autograd.Function):
 
     @staticmethod
@@ -96,7 +96,6 @@ class CorrBlock:
         corrUncertain = torch.var(corr_,dim=[3,4])
         corrUncertain_mask = torch.sigmoid(corrUncertain).view(batch*num, ht, wd, 1)
 
-
         self.offset[1] = self.offset[1]*corrUncertain_mask
 
         for i in range(self.num_levels):
@@ -104,10 +103,10 @@ class CorrBlock:
             out_pyramid.append(corr.view(batch, num, -1, ht, wd))
 
         """
-        mean_n, theta use in offline training
+        mean_n, theta are used in offline training , not testing  
         """
 
-        return torch.cat(out_pyramid, dim=2)#, self.mean_n, self.theta
+        return torch.cat(out_pyramid, dim=2) ,self.mean_n, self.theta
 
     def cat(self, other):
         for i in range(self.num_levels):
@@ -198,6 +197,14 @@ class AltCorrBlock:
             coords_i = (coords / 2 ** i).reshape(B * N, S, H, W, 2).contiguous()
             fmap1_i = fmap1_i.reshape((B * N,) + fmap1_i.shape[2:])
             fmap2_i = fmap2_i.reshape((B * N,) + fmap2_i.shape[2:])
+
+            if i == 1:
+                corr, = droid_backends.altcorr_forward(fmap1_i.float(), fmap2_i.float(), coords_i, 2)
+                corr_ = corr.permute(0, 1, 3, 4, 2).contiguous().view(N,H,W,5,5)  # 5 = 2*2 + 1
+                corrUncertain = torch.var(corr_, dim=[3, 4])
+                corrUncertain_mask = torch.sigmoid(corrUncertain).view(B*N, H, W, 1)
+                self.offset[1] = self.offset[1]*corrUncertain_mask
+
 
             corr, = defCorrSample.lowMem_defSample(fmap1_i.float(), fmap2_i.float(), coords_i, self.offset[i].contiguous().view(B * N, H, W, (2 * self.radius + 1) , (2 * self.radius + 1), 2).float(), self.radius)
 

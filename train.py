@@ -63,8 +63,8 @@ def train(gpu, args):
 
     model.train()
 
-    if 0 :
-        model.load_state_dict(torch.load("qwe.pth"))
+    if 1 :
+        model.load_state_dict(torch.load("xxxxxxxxxxxxxxxxxx/xxx.pth"))
 
     # fetch dataloader
     db = dataset_factory(['tartan'], datapath=args.datapath, n_frames=args.n_frames, fmin=args.fmin, fmax=args.fmax)
@@ -142,7 +142,7 @@ def train(gpu, args):
                 loss = args.w1 * geo_loss + args.w2 * res_loss + args.w3 * flo_loss+0.08*coordloss
                 sumloss += loss
                 sum += 1
-
+                # print(loss)
                 loss.backward()
 
                 Gs = poses_est[-1].detach()
@@ -202,7 +202,7 @@ if __name__ == '__main__':
     parser.add_argument('--batch', type=int, default=2)
     parser.add_argument('--iters', type=int, default=9)
     parser.add_argument('--steps', type=int, default=250000)
-    parser.add_argument('--lr', type=float, default=0.00012)
+    parser.add_argument('--lr', type=float, default=0.00013)
     parser.add_argument('--clip', type=float, default=2.5)
     parser.add_argument('--n_frames', type=int, default=4)
 

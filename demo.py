@@ -51,7 +51,6 @@ def image_stream(imagedir, calib, stride):
         intrinsics = torch.as_tensor([fx, fy, cx, cy])
         intrinsics[0::2] *= (w1 / w0)
         intrinsics[1::2] *= (h1 / h0)
-
         yield t, image[None], intrinsics
 
 
@@ -101,6 +100,7 @@ if __name__ == '__main__':
     parser.add_argument("--upsample", action="store_true")
     parser.add_argument("--reconstruction_path", help="path to saved reconstruction")
     args = parser.parse_args()
+
     args.stereo = False
     torch.multiprocessing.set_start_method('spawn')
 
