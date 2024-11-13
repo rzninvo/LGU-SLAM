@@ -132,6 +132,8 @@ python download_training.py --rgb --depth
 ```
 python train.py --datapath=<path to tartanair>
 ```
+## To 3DGS
+Fine-tune the LGU/DROID reconstruction results using the combination of 'executeSlam.py' and 'pc2mesh.py' in 'to3DGS' directory and output the final mesh based scene reconstruction. Referring to project [Splat-SLAM](https://github.com/google-research/Splat-SLAM), [SplaTAM](https://github.com/spla-tam/SplaTAM) and [GO-SLAM](https://github.com/youmi-zym/GO-SLAM).
 
 ## Acknowledgements
 Data from [TartanAir](https://theairlab.org/tartanair-dataset/) was used to train our model. We additionally use evaluation tools from [evo](https://github.com/MichaelGrupp/evo) and [tartanair_tools](https://github.com/castacks/tartanair_tools).
