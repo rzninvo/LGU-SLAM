@@ -74,8 +74,8 @@ if __name__ == '__main__':
     parser.add_argument("--id", type=int, default=-1)
     parser.add_argument("--upsample", action="store_true")
     parser.add_argument("--beta", type=float, default=0.3)
-    parser.add_argument("--filter_thresh", type=float, default=2.4)
-    parser.add_argument("--warmup", type=int, default=12) #12
+    parser.add_argument("--filter_thresh", type=float, default=2)
+    parser.add_argument("--warmup", type=int, default=12)
     parser.add_argument("--keyframe_thresh", type=float, default=3.5)
     parser.add_argument("--frontend_thresh", type=float, default=15)
     parser.add_argument("--frontend_window", type=int, default=20)
@@ -90,7 +90,7 @@ if __name__ == '__main__':
     torch.multiprocessing.set_start_method('spawn')
 
     from droid_slam.data_readers.tartan import test_split
-    from thirdparty.tartanair_tools.evaluation.tartanair_evaluator import TartanAirEvaluator
+    from evaluation.tartanair_evaluator import TartanAirEvaluator
 
     if not os.path.isdir("figures"):
         os.mkdir("figures")
@@ -114,7 +114,7 @@ if __name__ == '__main__':
     #               "/home/honsen/tartan/test/tartanair-test-mono-release/mono/MH005",
     #               "/home/honsen/tartan/test/tartanair-test-mono-release/mono/MH006",
     #               "/home/honsen/tartan/test/tartanair-test-mono-release/mono/MH007"]
-    test_split = ["/home/honsen/tartan/test/tartanair-test-mono-release/mono/ME004"]
+    test_split = ["/home/honsen/tartan/test/tartanair-test-mono-release/mono/ME000"]
     ate_list = []
     for scene in test_split:
         print("Performing evaluation on {}".format(scene))

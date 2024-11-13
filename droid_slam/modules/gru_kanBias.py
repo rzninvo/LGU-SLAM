@@ -4,7 +4,7 @@ from droid_slam.modules.kan import KANLinear
 
 class KAN_bias_GRU(nn.Module):
     def __init__(self, h_planes=128, i_planes=128):
-        super(ConvGRU, self).__init__()
+        super(KAN_bias_GRU, self).__init__()
         self.do_checkpoint = False
 
         self.convz = nn.Conv2d(h_planes+i_planes, h_planes, 3, padding=1)
@@ -36,10 +36,3 @@ class KAN_bias_GRU(nn.Module):
         net = (1-z) * net + z * q #
         return net
 
-if __name__ =="__main__":
-    gru = ConvGRU(128,310).cuda()
-    total_params = sum(p.numel() for p in gru.parameters() if p.requires_grad)
-    inp = torch.randn((36,310,40,64)).cuda()
-    net = torch.randn((36, 128, 40, 64)).cuda()
-    s = gru(net,inp)
-    print()
