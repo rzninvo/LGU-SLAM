@@ -7,7 +7,6 @@ import torch
 import torch.nn.functional as F
 import defCorrSample
 import droid_backends
-import defCorrSample1
 class CorrSampler(torch.autograd.Function):
 
     @staticmethod
@@ -207,7 +206,7 @@ class AltCorrBlock:
                 self.offset[1] = self.offset[1]*corrUncertain_mask
 
 
-            corr, = defCorrSample1.lowMem_defSample(fmap1_i.float(), fmap2_i.float(), coords_i, self.offset[i].contiguous().view(B * N, H, W, (2 * self.radius + 1) , (2 * self.radius + 1), 2).float(), self.radius)
+            corr, = defCorrSample.lowMem_defSample(fmap1_i.float(), fmap2_i.float(), coords_i, self.offset[i].contiguous().view(B * N, H, W, (2 * self.radius + 1) , (2 * self.radius + 1), 2).float(), self.radius)
 
             corr = corr.view(B, N, S, -1, H, W).permute(0, 1, 3, 4, 5, 2)
             corr_list.append(corr)
