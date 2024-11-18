@@ -49,7 +49,8 @@ python setup.py install
 
 4. Compile the LGU(learnable gaussian uncertainty + deformable sampling + low-memory deformable sampling) CUDA extensions (takes about 8 minutes)
 ```Bash
-python offersample_LGS/setup.py install
+cd offersample_LGS
+python setup.py install
 ```
 
 
