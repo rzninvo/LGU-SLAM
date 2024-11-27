@@ -91,7 +91,7 @@ class CorrBlock:
         coords = coords.permute(0,1,4,2,3)
         coords = coords.contiguous().view(batch*num, 2, ht, wd)
 
-        corr_ = CorrSampler.apply(self.corr_pyramid[1], coords/2, 2)
+        corr_ = CorrSampler.apply(self.corr_pyramid[1], coords/2, 1)
         corr_ = corr_.permute(0,3,4,1,2)
         corrUncertain = torch.var(corr_,dim=[3,4])
         corrUncertain_mask = torch.sigmoid(corrUncertain).view(batch*num, ht, wd, 1)
@@ -199,8 +199,8 @@ class AltCorrBlock:
             fmap2_i = fmap2_i.reshape((B * N,) + fmap2_i.shape[2:])
 
             if i == 1:
-                corr, = droid_backends.altcorr_forward(fmap1_i.float(), fmap2_i.float(), coords_i, 2)
-                corr_ = corr.permute(0, 1, 3, 4, 2).contiguous().view(N,H,W,5,5)  # 5 = 2*2 + 1
+                corr, = droid_backends.altcorr_forward(fmap1_i.float(), fmap2_i.float(), coords_i, 1)
+                corr_ = corr.permute(0, 1, 3, 4, 2).contiguous().view(N,H,W,3,3)  
                 corrUncertain = torch.var(corr_, dim=[3, 4])
                 corrUncertain_mask = torch.sigmoid(corrUncertain).view(B*N, H, W, 1)
                 self.offset[1] = self.offset[1]*corrUncertain_mask
