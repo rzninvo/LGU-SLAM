@@ -81,7 +81,7 @@ class GaussianMask(nn.Module):
         mean = torch.zeros_like(x)
         mean[:, 0:h, 0:w, 0:2] = self.coord
         mean = mean + mean_ofs
-        corr1 = GaussianMaskCuda.apply(mean,x,corr,6)
+        corr1 = GaussianMaskCuda.apply(mean,x,corr,4)
         denominator = 6.28 * torch.sqrt(det).view(b, h, w, 1,1)
         corr1 = corr1/denominator+corr
 
