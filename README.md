@@ -25,7 +25,7 @@ Yucheng Huang, Luping Ji, Hudong Liu, Mao Ye
 ## Requirements
 
 To run the code you will need ...
-* **Inference:** Running the demos will require a GPU with at least 12G of memory. 
+* **Inference(frontend):** ~14G(GPU MEM) when "--frontend_thresh" is 20. 
 
 * **Training:** Training requires a GPU with at least 24G of memory. 
 
