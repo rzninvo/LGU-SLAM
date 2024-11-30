@@ -140,4 +140,4 @@ Fine-tune the LGU/DROID reconstruction results using the combination of 'execute
 Data from [TartanAir](https://theairlab.org/tartanair-dataset/) was used to train our model. We additionally use evaluation tools from [evo](https://github.com/MichaelGrupp/evo) and [tartanair_tools](https://github.com/castacks/tartanair_tools).
 
 
-Thank you [DROID](https://github.com/princeton-vl/DROID-SLAM.git) for inspiring our work.
+Thank you [DROID](https://github.com/princeton-vl/DROID-SLAM.git) and [Efficient-KAN](https://github.com/Blealtan/efficient-kan) for inspiring our work.
