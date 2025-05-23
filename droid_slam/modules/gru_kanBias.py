@@ -35,7 +35,3 @@ class KAN_bias_GRU(nn.Module):
 
         net = (1-z) * net + z * q #
         return net
-<<<<<<< HEAD
-
-=======
->>>>>>> c058c0556e2175c739419ee6d407bca273ec1e8c
