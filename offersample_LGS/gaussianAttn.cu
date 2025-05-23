@@ -149,7 +149,7 @@ std::vector<torch::Tensor> gaussianMask_cuda(
   
   auto volume1 = torch::zeros_like(volume);
 
-  AT_DISPATCH_FLOATING_TYPES_AND_HALF(volume.type(), "gaussianMask_kernel", ([&] {
+  AT_DISPATCH_FLOATING_TYPES_AND_HALF(volume.scalar_type(), "gaussianMask_kernel", ([&] {
     gaussianMask_kernel<scalar_t><<<blocks, threads>>>(
       means.packed_accessor32<scalar_t,4,torch::RestrictPtrTraits>(),
       covs.packed_accessor32<scalar_t,4,torch::RestrictPtrTraits>(),
@@ -184,7 +184,7 @@ const dim3 threads(BLOCK, BLOCK);
 
 
 
-AT_DISPATCH_FLOATING_TYPES_AND_HALF(volume.type(), "gaussianMask_kernel_backward", ([&] {
+AT_DISPATCH_FLOATING_TYPES_AND_HALF(volume.scalar_type(), "gaussianMask_kernel_backward", ([&] {
   gaussianMask_kernel_backward<scalar_t><<<blocks, threads>>>(
     means.packed_accessor32<scalar_t,4,torch::RestrictPtrTraits>(),
     covs.packed_accessor32<scalar_t,4,torch::RestrictPtrTraits>(),
